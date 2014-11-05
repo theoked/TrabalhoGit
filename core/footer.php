@@ -1,0 +1,1 @@
+<h2 id="footer"><a href="http://kedsystem.com.br/">KedSystem.com &raquo;</a></h2>

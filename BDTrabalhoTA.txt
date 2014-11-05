@@ -1,0 +1,552 @@
+-- phpMyAdmin SQL Dump
+-- version 3.2.0.1
+-- http://www.phpmyadmin.net
+--
+-- Servidor: localhost
+-- Tempo de Geração: Ago 26, 2014 as 04:45 
+-- Versão do Servidor: 5.1.37
+-- Versão do PHP: 5.3.0
+
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+
+--
+-- Banco de Dados: `trabalhoTA`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `categoria`
+--
+
+CREATE TABLE IF NOT EXISTS `categoria` (
+  `cat_codigo` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(150) NOT NULL,
+  PRIMARY KEY (`cat_codigo`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+
+--
+-- Extraindo dados da tabela `categoria`
+--
+
+INSERT INTO `categoria` (`cat_codigo`, `descricao`) VALUES
+(1, 'Bebidas'),
+(2, 'Congelados'),
+(3, 'Frutas'),
+(4, 'Verduras, legumes e temperos'),
+(5, 'Matinais'),
+(6, 'Outros alimentos'),
+(7, 'Higiene pessoal'),
+(8, 'Limpeza'),
+(9, 'Laticínios e carnes');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `cidade`
+--
+
+CREATE TABLE IF NOT EXISTS `cidade` (
+  `cid_codigo` int(11) NOT NULL AUTO_INCREMENT,
+  `est_sigla` varchar(2) NOT NULL,
+  `nome` varchar(100) NOT NULL,
+  PRIMARY KEY (`cid_codigo`),
+  KEY `estado_cidade_fk` (`est_sigla`) USING BTREE
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=45 ;
+
+--
+-- Extraindo dados da tabela `cidade`
+--
+
+INSERT INTO `cidade` (`cid_codigo`, `est_sigla`, `nome`) VALUES
+(1, 'AC', 'Acre'),
+(2, 'AL', 'Alagoas'),
+(3, 'AM', 'Amazonas'),
+(4, 'AP', 'Amapá'),
+(5, 'BA', 'Bahia'),
+(6, 'CE', 'Ceará'),
+(7, 'DF', 'Distrito Federal'),
+(8, 'ES', 'Espírito Santo'),
+(9, 'GO', 'Goiás'),
+(10, 'MA', 'Maranhão'),
+(11, 'MG', 'Minas Gerais'),
+(12, 'MS', 'Mato Grosso do Sul'),
+(13, 'MT', 'Mato Grosso'),
+(14, 'PA', 'Pará'),
+(15, 'PB', 'Paraíba'),
+(16, 'PE', 'Pernambuco'),
+(17, 'PI', 'Piauí'),
+(18, 'PR', 'Paraná'),
+(19, 'RJ', 'Rio de Janeiro'),
+(20, 'RN', 'Rio Grande do Norte'),
+(21, 'RO', 'Rondônia'),
+(22, 'RR', 'Roraima'),
+(23, 'RS', 'Rio Grande do Sul'),
+(24, 'SC', 'Santa Catarina'),
+(25, 'SE', 'Sergipe'),
+(26, 'SP', 'São Paulo'),
+(27, 'TO', 'Tocantins'),
+(28, 'SC', 'Rio do Sul'),
+(34, 'SC', 'Vidal Ramos'),
+(35, 'SC', 'Imbuia'),
+(36, 'SC', 'Ituporanga'),
+(38, 'SP', 'CarapicuÃ­ba'),
+(39, '', 'estasdf'),
+(40, 'MA', 'tetetetete'),
+(41, 'MA', 'tetetetete'),
+(42, 'MA', 'tetetetete'),
+(43, 'MA', 'tetetetete'),
+(44, 'BA', 'testestestestes asdfas df');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `cliente`
+--
+
+CREATE TABLE IF NOT EXISTS `cliente` (
+  `cli_codigo` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(40) NOT NULL,
+  `sobrenome` varchar(60) NOT NULL,
+  PRIMARY KEY (`cli_codigo`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+
+--
+-- Extraindo dados da tabela `cliente`
+--
+
+INSERT INTO `cliente` (`cli_codigo`, `nome`, `sobrenome`) VALUES
+(1, 'Stelio de oliveira', 'Ked'),
+(2, 'Karolline Ferreira', 'Ked'),
+(3, 'Gabriela Ferreira', 'Ked'),
+(4, 'Danielle de Oliveira', 'Ked');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `endereco`
+--
+
+CREATE TABLE IF NOT EXISTS `endereco` (
+  `end_codigo` int(11) NOT NULL AUTO_INCREMENT,
+  `cid_codigo` int(11) NOT NULL,
+  `cli_codigo` int(11) NOT NULL,
+  `rua` varchar(30) NOT NULL,
+  `bairro` varchar(40) NOT NULL,
+  `cep` varchar(10) NOT NULL,
+  `complemento` varchar(100) NOT NULL,
+  `numero` int(11) NOT NULL,
+  PRIMARY KEY (`end_codigo`,`cid_codigo`,`cli_codigo`),
+  KEY `cliente_endereco_fk` (`cli_codigo`) USING BTREE,
+  KEY `cidade_endereco_fk` (`cid_codigo`) USING BTREE
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Extraindo dados da tabela `endereco`
+--
+
+INSERT INTO `endereco` (`end_codigo`, `cid_codigo`, `cli_codigo`, `rua`, `bairro`, `cep`, `complemento`, `numero`) VALUES
+(1, 34, 1, 'Rodolfo Prim', 'Centro', '88443-000', 'Casa', 257),
+(2, 34, 3, 'Rodolfo Prim', 'Centro', '88443-000', 'Casa', 257),
+(3, 34, 2, 'Rodolfo Prim', 'Centro', '88443-000', 'Casa', 257),
+(4, 38, 4, 'Est. do GopiÃºva', 'Pq. Jandaia', '06323-120', 'Casa', 54);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `estado`
+--
+
+CREATE TABLE IF NOT EXISTS `estado` (
+  `est_sigla` varchar(2) NOT NULL,
+  `nome` varchar(100) NOT NULL,
+  PRIMARY KEY (`est_sigla`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `estado`
+--
+
+INSERT INTO `estado` (`est_sigla`, `nome`) VALUES
+('AM', 'Amazonasasdfasdf'),
+('AP', 'Amapá'),
+('BA', 'Bahia'),
+('CE', 'Ceará'),
+('DF', 'Distrito Federal'),
+('ES', 'Espírito Santo'),
+('GO', 'Goiás'),
+('MA', 'Maranhão'),
+('MG', 'Minas Gerais'),
+('MS', 'Mato Grosso do Sul'),
+('MT', 'Mato Grosso'),
+('PA', 'Pará'),
+('PB', 'Paraíba'),
+('PE', 'Pernambuco'),
+('PI', 'Piauí'),
+('PR', 'Paraná'),
+('RJ', 'Rio de Janeiro'),
+('RN', 'Rio Grande do Norte'),
+('RO', 'Rondônia'),
+('RR', 'Roraima'),
+('RS', 'Rio Grande do Sul'),
+('SC', 'Santa Catarina'),
+('SE', 'Sergipe'),
+('TO', 'Tocantins');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `pedido`
+--
+
+CREATE TABLE IF NOT EXISTS `pedido` (
+  `ped_codigo` int(11) NOT NULL AUTO_INCREMENT,
+  `cli_codigo` int(11) NOT NULL,
+  `datapedido` date NOT NULL,
+  PRIMARY KEY (`ped_codigo`),
+  KEY `cliente_pedido_fk` (`cli_codigo`) USING BTREE
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Extraindo dados da tabela `pedido`
+--
+
+INSERT INTO `pedido` (`ped_codigo`, `cli_codigo`, `datapedido`) VALUES
+(1, 1, '2011-12-08'),
+(2, 1, '2011-12-08'),
+(3, 2, '2011-12-07');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `pedidoproduto`
+--
+
+CREATE TABLE IF NOT EXISTS `pedidoproduto` (
+  `sequencia` int(11) NOT NULL AUTO_INCREMENT,
+  `ped_codigo` int(11) NOT NULL,
+  `pro_codigo` int(11) NOT NULL,
+  `quantidade` int(11) NOT NULL,
+  `valor` double NOT NULL,
+  PRIMARY KEY (`sequencia`,`ped_codigo`,`pro_codigo`),
+  KEY `produto_pedidoproduto_fk` (`pro_codigo`) USING BTREE,
+  KEY `pedido_pedidoproduto_fk` (`ped_codigo`) USING BTREE
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+--
+-- Extraindo dados da tabela `pedidoproduto`
+--
+
+INSERT INTO `pedidoproduto` (`sequencia`, `ped_codigo`, `pro_codigo`, `quantidade`, `valor`) VALUES
+(1, 1, 1, 3, 30),
+(2, 1, 2, 4, 20),
+(3, 2, 10, 2, 10.5),
+(4, 2, 11, 3, 12.45),
+(5, 3, 20, 3, 4.99),
+(6, 3, 21, 2, 9.89);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `produto`
+--
+
+CREATE TABLE IF NOT EXISTS `produto` (
+  `pro_codigo` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(40) NOT NULL,
+  `valor` decimal(10,2) NOT NULL,
+  `cat_codigo` int(11) NOT NULL,
+  `uni_codigo` int(11) NOT NULL,
+  PRIMARY KEY (`pro_codigo`),
+  KEY `unidade_medida_produto_fk` (`uni_codigo`),
+  KEY `categoria_produto_fk` (`cat_codigo`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=211 ;
+
+--
+-- Extraindo dados da tabela `produto`
+--
+
+INSERT INTO `produto` (`pro_codigo`, `nome`, `valor`, `cat_codigo`, `uni_codigo`) VALUES
+(1, 'Açúcar', '2.30', 6, 11),
+(2, 'Alimento infantil', '12.45', 6, 11),
+(3, 'Amido de milho', '2.40', 6, 11),
+(4, 'Arroz', '12.46', 6, 11),
+(5, 'Aspargo em conserva', '2.50', 6, 6),
+(6, 'Atum em lata', '12.47', 6, 6),
+(7, 'Aveia', '2.60', 6, 11),
+(8, 'Azeite', '12.48', 6, 6),
+(9, 'Azeitonas', '2.70', 6, 6),
+(10, 'Batata frita', '12.49', 6, 11),
+(11, 'Caldo de carne/galinha/peixe', '2.80', 6, 1),
+(12, 'Catchup', '12.50', 6, 3),
+(13, 'Chocolate', '2.90', 6, 6),
+(14, 'Creme de leite em lata', '12.51', 6, 6),
+(15, 'Ervilha', '2.10', 6, 6),
+(16, 'Ervilha em conserva', '2.40', 6, 6),
+(17, 'Farinha de milho', '12.46', 6, 11),
+(18, 'Farinha de rosca', '2.50', 6, 11),
+(19, 'Farinha de trigo', '12.47', 6, 11),
+(20, 'Feijão', '2.60', 6, 11),
+(21, 'Gelatina', '12.48', 6, 1),
+(22, 'Gelatina em pó', '2.70', 6, 1),
+(23, 'Grão-de-bico', '12.49', 6, 11),
+(24, 'Leite condensado', '2.80', 6, 6),
+(25, 'Lentilha', '12.50', 6, 6),
+(26, 'Macarrão', '2.90', 6, 8),
+(27, 'Macarrão massa fresca', '12.51', 6, 8),
+(28, 'Macarrão para sopa', '2.10', 6, 8),
+(29, 'Maionese', '12.52', 6, 13),
+(30, 'Milho em conserva', '2.11', 6, 6),
+(31, 'Milho para pipoca', '2.50', 6, 8),
+(32, 'Molho de soja', '12.47', 6, 13),
+(33, 'Molho de tomate', '2.60', 6, 6),
+(34, 'Mostarda', '12.48', 6, 6),
+(35, 'Óleo', '2.70', 6, 6),
+(36, 'Ovos', '12.49', 6, 13),
+(37, 'Sal', '2.80', 6, 11),
+(38, 'Salgadinhos', '12.50', 6, 8),
+(39, 'Sardinha em lata', '2.90', 6, 6),
+(40, 'Adoçante', '3.45', 5, 13),
+(41, 'Biscoito doce', '2.79', 5, 8),
+(42, 'Biscoito salgado', '3.78', 5, 8),
+(43, 'Bolo', '5.79', 5, 13),
+(44, 'Café', '7.99', 5, 13),
+(45, 'Cereal matinal', '3.46', 5, 13),
+(46, 'Chá', '2.80', 5, 13),
+(47, 'Chocolate em pó', '3.79', 5, 13),
+(48, 'Filtro de papel', '5.80', 5, 13),
+(49, 'Leite em pó', '7.10', 5, 11),
+(50, 'Mistura para bolo', '3.47', 5, 13),
+(51, 'Pão de forma', '2.81', 5, 8),
+(52, 'Pão francês', '3.80', 5, 11),
+(53, 'Torradas', '5.81', 5, 8),
+(54, 'Acelga', '1.99', 4, 13),
+(55, 'Agrião', '1.89', 4, 13),
+(56, 'Alecrim', '1.79', 4, 13),
+(57, 'Alface', '1.67', 4, 13),
+(58, 'Alho', '3.88', 4, 11),
+(59, 'Batata', '2.89', 4, 11),
+(60, 'Batata doce', '2.99', 4, 11),
+(61, 'Cebola', '1.99', 4, 11),
+(62, 'Chuchu', '1.89', 4, 11),
+(63, 'Cogumelo', '1.79', 4, 6),
+(64, 'Espinafre', '1.67', 4, 13),
+(65, 'Hortelã', '3.89', 4, 13),
+(66, 'Inhame', '2.11', 4, 11),
+(67, 'Mandioca', '2.12', 4, 11),
+(68, 'Manjericão', '1.99', 4, 13),
+(69, 'Orégano', '1.89', 4, 8),
+(70, 'Pepino', '1.79', 4, 11),
+(71, 'Pimenta', '1.67', 4, 8),
+(72, 'Pimentão', '3.90', 4, 11),
+(73, 'Quiabo', '2.13', 4, 11),
+(74, 'Repolho', '2.14', 4, 13),
+(75, 'Rúcula', '1.99', 4, 13),
+(76, 'Salsinha e cebolinha', '1.89', 4, 13),
+(77, 'Tomate', '1.79', 4, 11),
+(78, 'Vagem', '1.67', 4, 13),
+(79, 'Abacate', '1.90', 3, 11),
+(80, 'Acerola', '3.78', 3, 11),
+(81, 'Ameixa', '2.99', 3, 11),
+(82, 'Amora', '2.78', 3, 11),
+(83, 'Banana', '1.91', 3, 11),
+(84, 'Cereja', '3.79', 3, 11),
+(85, 'Figo', '2.57', 3, 11),
+(86, 'Framboesa', '2.36', 3, 11),
+(87, 'Laranja', '1.92', 3, 11),
+(88, 'Limão', '3.80', 3, 11),
+(89, 'Maçã', '2.15', 3, 11),
+(90, 'Mamão', '2.60', 3, 11),
+(91, 'Manga', '1.93', 3, 11),
+(92, 'Melancia', '3.81', 3, 11),
+(93, 'Melão', '2.27', 3, 11),
+(94, 'Morango', '2.48', 3, 11),
+(95, 'Nectarina', '1.94', 3, 11),
+(96, 'Pera', '3.82', 3, 11),
+(97, 'Pêssego', '2.69', 3, 11),
+(98, 'Pitanga', '2.90', 3, 11),
+(99, 'Uva', '1.95', 3, 11),
+(100, 'Empanados', '6.55', 2, 11),
+(101, 'Hambúrguer', '7.79', 17, 11),
+(102, 'Legumes', '3.78', 17, 8),
+(103, 'Pizza', '8.90', 17, 13),
+(104, 'Pratos prontos', '6.56', 17, 13),
+(105, 'Salgadinhos', '7.80', 17, 11),
+(106, 'Sobremesa', '3.79', 17, 11),
+(107, 'Sorvete', '8.91', 17, 7),
+(108, 'Água', '1.90', 1, 4),
+(109, 'Aperitivos e licores', '5.99', 1, 4),
+(110, 'Cerveja', '2.95', 1, 4),
+(111, 'Chás prontos', '1.91', 1, 4),
+(112, 'Destilados', '68.00', 1, 4),
+(113, 'Isotônicos e energéticos', '7.99', 1, 4),
+(114, 'Outros', '9.99', 1, 4),
+(115, 'Refesco em pó', '0.99', 1, 13),
+(116, 'Refrigerantes', '2.97', 1, 7),
+(117, 'Sucos', '1.93', 1, 7),
+(118, 'Vinho', '8.99', 1, 7),
+(119, 'Carne bovina', '14.78', 9, 11),
+(120, 'Carne suína', '16.89', 9, 11),
+(121, 'Coalhada', '14.79', 9, 11),
+(122, 'Cream cheese', '16.90', 9, 11),
+(123, 'Creme de leite fresco', '14.80', 9, 6),
+(124, 'Frango', '17.00', 9, 11),
+(125, 'Iogurte', '14.81', 9, 7),
+(126, 'Leite', '16.92', 9, 7),
+(127, 'Linguiça', '14.82', 9, 11),
+(128, 'Patê', '16.93', 9, 13),
+(129, 'Peixe', '14.83', 9, 11),
+(130, 'Presunto', '16.94', 9, 11),
+(131, 'Queijo', '14.84', 9, 11),
+(132, 'Requeijão cremoso', '16.95', 9, 11),
+(133, 'Salsicha', '14.85', 9, 11),
+(134, 'Água sanitária', '1.99', 8, 7),
+(135, 'Álcool', '2.89', 8, 7),
+(136, 'Alvejante', '3.99', 8, 7),
+(137, 'Amaciante', '1.10', 8, 7),
+(138, 'Anil', '2.90', 8, 7),
+(139, 'Cera em pasta', '3.10', 8, 6),
+(140, 'Cera líquida', '1.10', 8, 7),
+(141, 'Desentupidor de pia', '2.91', 8, 13),
+(142, 'Desinfetante banheiro', '3.10', 8, 7),
+(143, 'Desinfetante geral', '1.10', 8, 7),
+(144, 'Desodorizador (banheiro)', '2.90', 8, 13),
+(145, 'Desodorizador (casa)', '3.10', 8, 13),
+(146, 'Detergente', '1.10', 8, 7),
+(147, 'Eliminador de odores (geladeira)', '2.92', 8, 13),
+(148, 'Eliminador de odores (roupas)', '3.11', 8, 13),
+(149, 'Esponja de aço', '1.11', 8, 13),
+(150, 'Esponja dupla face', '2.91', 8, 13),
+(151, 'Flanela de limpeza', '3.11', 8, 13),
+(152, 'Graxa', '1.11', 8, 6),
+(153, 'Guardanapo de papel', '2.93', 8, 12),
+(154, 'Inseticida e raticida', '3.12', 8, 13),
+(155, 'Lã de aço', '1.12', 8, 13),
+(156, 'Limpador', '2.92', 8, 13),
+(157, 'Limpador de tapetes', '3.12', 8, 13),
+(158, 'Limpa-forno', '1.12', 8, 6),
+(159, 'Limpa-vidros', '2.94', 8, 6),
+(160, 'Lustra-móveis', '3.13', 8, 6),
+(161, 'Luva doméstica', '1.13', 8, 13),
+(162, 'Pano de limpeza de cozinha', '2.93', 8, 13),
+(163, 'Passa-roupas', '3.13', 8, 13),
+(164, 'Polidor de metais', '1.13', 8, 13),
+(165, 'Pré-lavagem', '2.95', 8, 13),
+(166, 'Removedor', '3.14', 8, 7),
+(167, 'Rodo', '1.14', 8, 12),
+(168, 'Rodo de pia', '2.94', 8, 12),
+(169, 'Sabão de coco', '3.14', 8, 11),
+(170, 'Sabão em barra', '1.14', 8, 13),
+(171, 'Sabão em pó', '2.96', 8, 11),
+(172, 'Sabão líquido (roupas)', '3.15', 8, 7),
+(173, 'Saco de lixo grande', '1.15', 8, 8),
+(174, 'Saco de lixo médio', '2.95', 8, 8),
+(175, 'Saco de lixo pequeno', '3.15', 8, 8),
+(176, 'Saponáceo', '1.15', 8, 10),
+(177, 'Tira-manchas', '2.97', 8, 10),
+(178, 'Toalha de papel', '3.16', 8, 12),
+(179, 'Vassoura', '1.16', 8, 13),
+(180, 'Absorvente higiênico', '4.45', 7, 13),
+(181, 'Algodão', '2.23', 7, 13),
+(182, 'Anti-séptico bucal', '7.90', 7, 7),
+(183, 'Condicionador', '4.46', 7, 7),
+(184, 'Cotonetes', '2.24', 7, 10),
+(185, 'Creme de barbear', '7.91', 7, 13),
+(186, 'Creme hidratante para as mãos', '4.47', 7, 13),
+(187, 'Creme hidratante para o corpo', '2.25', 7, 13),
+(188, 'Creme para pentear', '7.92', 7, 13),
+(189, 'Desodorante', '4.48', 7, 13),
+(190, 'Escova de cabelos', '2.26', 7, 13),
+(191, 'Escova de dentes', '7.93', 7, 13),
+(192, 'Esmalte', '4.49', 7, 13),
+(193, 'Esponja de banho', '2.27', 7, 13),
+(194, 'Fio dental', '7.94', 7, 13),
+(195, 'Fralda descartável', '4.50', 7, 13),
+(196, 'Lâminas de barbear', '2.28', 7, 13),
+(197, 'Lenços umedecidos', '7.95', 7, 13),
+(198, 'Lixa de unhas', '4.51', 7, 13),
+(199, 'Loção contra assaduras', '2.29', 7, 13),
+(200, 'Loção de limpeza', '7.96', 7, 3),
+(201, 'Papel higiênico', '4.52', 7, 12),
+(202, 'Pasta de dentes', '2.30', 7, 13),
+(203, 'Pente', '7.97', 7, 13),
+(204, 'Protetor solar', '4.53', 7, 13),
+(205, 'Removedor de esmaltes', '2.31', 7, 13),
+(206, 'Sabonete em barra', '7.98', 7, 13),
+(207, 'Sabonete líquido', '4.54', 7, 7),
+(208, 'Talco infantil', '2.32', 7, 13),
+(209, 'Xampu', '7.99', 7, 7),
+(210, 'asdfasdfasdf', '5.00', 2, 13);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `telefone`
+--
+
+CREATE TABLE IF NOT EXISTS `telefone` (
+  `tel_codigo` int(11) NOT NULL AUTO_INCREMENT,
+  `end_codigo` int(11) NOT NULL,
+  `cid_codigo` int(11) NOT NULL,
+  `cli_codigo` int(11) NOT NULL,
+  `numero` varchar(14) NOT NULL,
+  PRIMARY KEY (`tel_codigo`),
+  KEY `endereco_telefone_fk` (`end_codigo`,`cid_codigo`,`cli_codigo`) USING BTREE
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Extraindo dados da tabela `telefone`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `unidade_medida`
+--
+
+CREATE TABLE IF NOT EXISTS `unidade_medida` (
+  `uni_codigo` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(50) NOT NULL,
+  `sigla` char(2) NOT NULL,
+  PRIMARY KEY (`uni_codigo`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
+
+--
+-- Extraindo dados da tabela `unidade_medida`
+--
+
+INSERT INTO `unidade_medida` (`uni_codigo`, `descricao`, `sigla`) VALUES
+(1, 'Caixas', 'Cx'),
+(2, 'Fardos', 'Fd'),
+(3, 'Frascos', 'Fr'),
+(4, 'Garrafas', 'Ga'),
+(5, 'Gramas', 'Gr'),
+(6, 'Latas', 'La'),
+(7, 'Litros', 'Lt'),
+(8, 'Pacotes', 'Pc'),
+(9, 'Pedaços', 'Pe'),
+(10, 'Potes', 'Pt'),
+(11, 'Quilos', 'Kg'),
+(12, 'Rolos', 'Rl'),
+(13, 'Unidades', 'Un');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `users`
+--
+
+CREATE TABLE IF NOT EXISTS `users` (
+  `usr_codigo` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(100) NOT NULL,
+  PRIMARY KEY (`usr_codigo`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Extraindo dados da tabela `users`
+--
+
+INSERT INTO `users` (`usr_codigo`, `nome`) VALUES
+(1, 'asasd'),
+(2, '3qr2323');
